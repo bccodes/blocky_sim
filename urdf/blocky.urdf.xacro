@@ -4,6 +4,8 @@
 
   <!-- Set up some variables and defaults -->
   <xacro:property name="width" value="0.2" />
+  <xacro:property name="pi" value="3.1415" />
+
   
   <material name="blue">
     <color rgba="0 0 0.8 1"/>
@@ -22,7 +24,9 @@
 
   
   <!-- Define Links-->
-  <link name="base_link">
+  <link name="base_link" />
+
+  <link name="link1">
     <visual>
       <geometry>
         <box size="${width} ${width} ${width}"/>
@@ -37,7 +41,7 @@
     <xacro:default_inertial mass="10"/>
   </link>
 
-  <link name="head">
+  <link name="link2">
     <visual>
       <geometry>
         <box size="${width} ${width} ${width}"/>
@@ -54,12 +58,19 @@
 
 
   <!-- Define Joints -->
-  <joint name="joint1" type="continuous">
+  <joint name="joint0" type="fixed">
     <parent link="base_link"/>
-    <child link="head"/>
+    <child link="link1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="joint1" type="continuous">
+    <parent link="link1"/>
+    <child link="link2"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 ${width}"/>
-    <limit effort="30" velocity="1.0"/>
+    <limit effort="30" velocity="10" lower="0" upper="${pi*2}"/>
   </joint>
 
 
@@ -70,7 +81,7 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     <joint name="joint1">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
