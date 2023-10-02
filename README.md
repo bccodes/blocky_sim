@@ -10,3 +10,5 @@ Launching blocky.launch will start RViz and Gazebo, then running talker.py will 
 The included blocky URDF contains 2x links, 1x joint and 1x transmission.
 
 This package can be expanded to model larger robots by modifying the URDF (.xacro), config (.yaml), and launch (.launch) files.
+
+-Ben
